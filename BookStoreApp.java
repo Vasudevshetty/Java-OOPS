@@ -55,43 +55,53 @@ class Book {
     }
 }
 
-public class BookStore {
+class BookStore {
+    private Book[] books;
+
+    public BookStore(int bookNum) {
+        books = new Book[bookNum];
+    }
+
+    public Book[] getBooks() {
+        return this.books;
+    }
     // create a method to calculate total cost of the books.
-    public static double calculateTotalCost(Book[] books){
+    public double calculateTotalCost() {
         double totalCost = 0;
-        for(Book book: books){
+        for (Book book : this.books) {
             totalCost += book.getTotalPrice();
         }
         return totalCost;
     }
 
     // create a method to display the details of the books present.
-    public static void displayInformation(Book[] books){
+    public void displayInformation() {
         System.out.println("\nName\t\tCode\t\tCost\t\tQuantity\t\tTotalPrice\n");
-        for(Book book: books){
+        for (Book book : this.books) {
             // indent the way you want
             System.out.println(
-                book.getTitle() + "\t\t" +
-                book.getCode() + "\t\t" +
-                book.getCost() + "\t\t" +
-                book.getQuantity() + "\t\t" +
-                book.getTotalPrice()
-            );
+                    book.getTitle() + "\t\t" +
+                            book.getCode() + "\t\t" +
+                            book.getCost() + "\t\t" +
+                            book.getQuantity() + "\t\t" +
+                            book.getTotalPrice());
         }
 
-        double totalCost = calculateTotalCost(books);
+        double totalCost = calculateTotalCost();
         System.out.println("Total cost : " + totalCost);
     }
 
-    public static void main(String args[]){
+}
+
+public class BookStoreApp {
+    public static void main(String args[]) {
         Scanner scan = new Scanner(System.in);
 
         // create a array of books(objects)
         int bookNum = 2;
-        Book[] books = new Book[bookNum];
-
-        for(int i = 0; i < bookNum; i++){
-            System.out.println("\nEnter details for book " + (i+1) + ", ");
+        BookStore store = new BookStore(bookNum);
+        for (int i = 0; i < bookNum; i++) {
+            System.out.println("\nEnter details for book " + (i + 1) + ", ");
             System.out.print("Title : ");
             String title = scan.nextLine();
             System.out.print("Code : ");
@@ -104,11 +114,11 @@ public class BookStore {
             scan.nextLine();// consume next line.
 
             // create the object using constructor.
-            books[i] = new Book(title, code, cost, quantity);
+            store.getBooks()[i] = new Book(title, code, cost, quantity);
         }
 
         // call the display function.
-        displayInformation(books);
+        store.displayInformation();
 
         scan.close();
     }
