@@ -28,9 +28,10 @@ members:
     VI. In ACCOUNT class constructor, demonstrate the use of “this” 
     keyword*/
 
-
 // create a account class with members and methods.
-class Account{
+import java.util.Scanner;
+
+class Account {
     private String name;
     private long accountNumber;
     private String accountType;
@@ -40,7 +41,7 @@ class Account{
     private static int noOfAccounts = 0;
 
     // construct the objects accorindly.
-    Account(String name, long accountNumber, String accountType, double balance){
+    public Account(String name, long accountNumber, String accountType, double balance) {
         // indicate the usage of this keyword.
         this.name = name;
         this.accountNumber = accountNumber;
@@ -51,62 +52,109 @@ class Account{
         noOfAccounts++;
     }
 
+    public long getAccountNumber() {
+        return this.accountNumber;
+    }
+
     // method to deposit an amount
-    public void deposit(double amount){
+    public void deposit(double amount) {
         balance += amount;
         // need not to worry about default value since in java default is zero.
     }
 
     // method to withdraw amount from the account upon checking the balance.
-    public void withdraw(double amount){
-        if(amount >= balance){
+    public void withdraw(double amount) {
+        if (amount <= balance) {
             balance -= amount;
             // decrement or take out the amount.
-        }else{
+        } else {
             System.out.println("Insufficient balance to withdraw.");
         }
     }
 
     // method to display name and balance.
-    public void display(){
+    public void display() {
         System.out.println("Account details,");
-        System.out.println("Account holder name : "+ name);
-        System.out.println("Account number : "+ accountNumber);
-        System.out.println("Account type : "+ accountType);
-        System.out.println("Balance : "+ balance);
+        System.out.println("Account holder name : " + name);
+        System.out.println("Account number : " + accountNumber);
+        System.out.println("Account type : " + accountType);
+        System.out.println("Balance : " + balance);
     }
 
-    // method to get the total number of accounts 
-    public static int getNoOfAccounts(){
+    // method to get the total number of accounts
+    public static int getNoOfAccounts() {
         return noOfAccounts;
+    }
+
+    public double getBalance() {
+        return this.balance;
     }
 }
 
-
-// create a execute account class to handle the account and define main method in this class.
+// create a execute account class to handle the account and define main method
+// in this class.
 public class ExecuteAccount {
-    public static void main(String args[]){
+    public static void main(String args[]) {
+        Scanner scan = new Scanner(System.in);
         // as said create a array of account class.
-        Account[] accounts = new Account[5];
+        System.out.print("Enter the number of Account holders: ");
+        int n = scan.nextInt();
+        Account[] accounts = new Account[n];
 
-        // either get the details from the user (Scanner) or initalise.
-        // accounts[0] = new Account("vasu", 0, "savings", 0);
-        // accounts[1] = new Account(null, 0, null, 0);
-        // accounts[2] = new Account(null, 0, null, 0);
-        // accounts[3] = new Account(null, 0, null, 0);
-        // accounts[4] = new Account(null, 0, null, 0);
-    
-        // accounts[0].deposit(1000);
-        // accounts[0].withdraw(1000);
-
-        // display information of accounts.
-        for(Account account : accounts){
-            account.display();
+        for (int i = 0; i < n; i++) {
             System.out.println();
+            System.out.println("Enter the details of the account holder " + (i + 1) + ",");
+            System.out.print("Enter the name : ");
+            String name = scan.next();
+            System.out.print("Enter the account number : ");
+            long accountNumber = scan.nextLong();
+            System.out.print("Enter the account type : ");
+            String accountType = scan.next();
+            System.out.print("Enter the Balance : ");
+            double balance = scan.nextDouble();
+
+            accounts[i] = new Account(name, accountNumber, accountType, balance);
+            System.out.println("\n");
         }
 
-        // Get the total no of accounts. since it is a static method it can be invoked using class name itself.
+        int choice;
+        do {
+            System.out.println();
+            System.out.println("Menu.\n1. Deposit\n2. Withdraw\n3. Exit");
+            System.out.print("Enter choice : ");
+            choice = scan.nextInt();
+            int idx;
+            if (choice != 3) {
+                System.out.print("Enter the account number : ");
+                long accountNumber = scan.nextLong();
+                for (idx = 0; idx < accounts.length; idx++) {
+                    if (accountNumber == accounts[idx].getAccountNumber())
+                        break;
+                }
+                if (idx == accounts.length) {
+                    System.out.println("Enter valid account number only.");   
+                    continue;
+                }
+                System.out.println();
+                System.out.println("The details of the account number is : ");
+                accounts[idx].display();
+                System.out.println();
+                System.out.print("Enter the amount to " + (choice == 1 ? "deposit :  " : "withdraw : "));
+                double amount = scan.nextDouble();
+                if (choice == 1)
+                    accounts[idx].deposit(amount);
+                else
+                    accounts[idx].withdraw(amount);
+                System.out.println("The balance is " + accounts[idx].getBalance());
+                System.out.println();
+            }
+        } while (choice != 3);
+
+        System.out.println();
+        // Get the total no of accounts. since it is a static method it can be invoked
+        // using class name itself.
         System.out.println("Total Account holders : " + Account.getNoOfAccounts());
 
+        scan.close();
     }
 }
