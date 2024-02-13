@@ -52,10 +52,10 @@ class NationalBank extends Bank{
     }
     @Override
     public double getRoi(){
-        if(termDeposit >= 3){
+        if(termDeposit >= 3)
             roi = 0.07; // 7%
-        }else roi = 0.08; // 8%
-
+        else
+            roi = 0;
         return roi;
     }
     // override the deposit method to deposit amount for a minimum of 3 years.
