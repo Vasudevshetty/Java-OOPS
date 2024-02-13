@@ -30,6 +30,9 @@ class Employee{
         this.name = name;
         this.deptName = deptName;
         this.basicPay = basicPay;
+        this.calculateGrossPay();
+        this.calculateIncomeTax();
+        this.calculateNetPay();
     }
 
     // method to calculate gross pay.
@@ -93,9 +96,6 @@ public class EmployeePay {
 
             // construct and call the calcualte functions 
             employees[i] = new Employee(Id, name, deptName, basicPay);
-            employees[i].calculateGrossPay();
-            employees[i].calculateIncomeTax();
-            employees[i].calculateNetPay();
 
             System.out.println();
         }
