@@ -5,8 +5,8 @@ contains every item form A and B, in ascending order */
 public class MergeSortedArray {
     public static void main(String args[]){
         // you can either input the array or rather initalise the way done below
-        int[] A = {1, 2, 3, 4, 5};
-        int[] B = {6, 7, 8, 9, 10};
+        int[] A = {1, 3, 5};
+        int[] B = {2, 4, 6};
 
         int[] C = merge(A, B);
 
@@ -17,17 +17,15 @@ public class MergeSortedArray {
         }   
     }
     public static int[] merge(int[] A, int[] B){
-        int lengthA = A.length;
-        int lengthB = B.length;
         // create new array of size contributed from both.
-        int[] C = new int[lengthA + lengthB];
+        int[] C = new int[A.length + B.length];
 
         // create iterators
         int i, j, k;
         i = j = k = 0;
 
         // start merging arrays 
-        while(i < lengthA && j < lengthB){
+        while(i < A.length && j < B.length){
             if(A[i] < B[j]){
                 C[k++] = A[i++];
             }else C[k++] = B[j++];
@@ -35,8 +33,8 @@ public class MergeSortedArray {
 
         // copy remaining elements to the arrays.
         // either only one array can be non-empty.
-        while(i < lengthA) C[k++] = A[i++];
-        while(j < lengthB) C[k++] = B[j++];
+        while(i < A.length) C[k++] = A[i++];
+        while(j < B.length) C[k++] = B[j++];
         return C;
     }   
 }
